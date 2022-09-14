@@ -1,0 +1,57 @@
+#!/bin/bash
+#installing java-11-openjdk
+which amazon-linux-extras
+amazon-linux-extras enable java-openjdk11
+yum clean metadata
+yum install java-11-openjdk -y
+#Enable EPEL
+wget -O /etc/yum.repos.d/jenkins.repo https://pkg.jenkins.io/redhat-stable/jenkins.repo
+#installing with rpm
+rpm --import https://pkg.jenkins.io/redhat-stable/jenkins.io.key
+amazon-linux-extras install epel -y
+#jenkins installatin
+yum install jenkins -y
+systemctl enable jenkins
+systemctl start jenkins
+systemctl status jenkins
+#Install Git
+yum install git -y
+#install maven in /opt
+cd /opt
+#download the zip
+wget https://dlcdn.apache.org/maven/maven-3/3.8.6/binaries/apache-maven-3.8.6-bin.zip
+#extract
+unzip apache-maven-3.8.6-bin.zip
+#rename
+mv apache-maven-3.8.6 maven38
+#change the permissions
+chmod -R 700 maven38
+#delte the zip
+rm -f apache-maven-3.8.6-bin.zip
+
+#Tomcat installation
+#!/bin/bash
+cd /opt
+#installing java-11-openjdk
+which amazon-linux-extras
+amazon-linux-extras enable java-openjdk11
+yum clean metadata
+yum install java-11-openjdk -y
+#install tomcat
+wget https://dlcdn.apache.org/tomcat/tomcat-9/v9.0.65/bin/apache-tomcat-9.0.65-windows-x64.zip
+unzip apache-tomcat-9.0.65-windows-x64.zip
+mv apache-tomcat-9.0.65 tomcat
+chmod -R 700 tomcat 
+cd tomcat/bin/
+./startup.sh 
+
+
+#!/bin/bash
+#Goto the code containing folder : cd /opt/spring-framework-petclinic/
+/opt/maven38/bin/mvn clean package -P MySQL
+
+scp -i /tmp/apachehttpd-khan.pem petclinic.war ec2-user@10.0.135.5:/tmp
+cp petclinic.war /opt/tomcat/webapps/
+
+
+$ wget https://github.com/NewRelicUniversity/generate-apm-data/raw/master/petclinic-1.0.war -O webapps/petclinic.war
